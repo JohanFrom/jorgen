@@ -18,7 +18,7 @@ namespace jorgen.Controllers
             _logger.LogInformation("Starting API CALL", DateTimeOffset.UtcNow);
             try
             {
-                string? imagepathName = AppDomain.CurrentDomain.BaseDirectory + "Data\\jorgen.png" ?? null;
+                string? imagepathName = AppDomain.CurrentDomain.BaseDirectory + "Data\\jorgenimg.png" ?? null;
 
                 if (imagepathName == null)
                 {
