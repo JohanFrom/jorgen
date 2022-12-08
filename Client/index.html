@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>JorgenSkagg</title>
+    
+    
+    <style>
+        main{
+            margin-top: 8vh;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        p{
+            font-size: 5vh
+        }
+
+    </style>
+</head>
+<body>
+
+    <main>
+        <p>Mästeren av allt från Objective Pascal till .NET!<p>
+
+        <div id="img-container"></div>
+    </main>
+
+    <script>
+        const imageContainer = document.getElementById("img-container");
+        const img = document.createElement("img");
+        img.setAttribute("src", "https://jorgenapi.azurewebsites.net/jorgen");
+        img.setAttribute("height", "300");
+        img.setAttribute("width", "300");
+        imageContainer.appendChild(img)
+    </script>
+
+</body>
+</html>
