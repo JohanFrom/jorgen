@@ -29,5 +29,11 @@ namespace jorgen.Controllers
             })
             .ToArray();
         }
+
+        [HttpGet("testar")]
+        public string GetTwo()
+        {
+            return "hej";
+        }
     }
 }
