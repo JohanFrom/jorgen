@@ -32,6 +32,11 @@ namespace jorgen
             //    RequestPath = "/client"
             //});
 
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+
             app.UseAuthorization();
 
 
