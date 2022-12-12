@@ -34,14 +34,18 @@ namespace jorgen
             var hostEnviornment = app.Services.GetRequiredService<IWebHostEnvironment>();
             app.UseStaticFiles(new StaticFileOptions
             {
-                FileProvider = new PhysicalFileProvider(Path.Combine(hostEnviornment.ContentRootPath, "Client")), RequestPath = "/client"
+                FileProvider = new PhysicalFileProvider(Path.Combine(hostEnviornment.ContentRootPath, "Client")),
+                RequestPath = "/client"
             });
 
             app.UseRouting();
 
             app.UseAuthorization();
 
-            app.MapControllers();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
 
             app.Run();
         }
