@@ -38,6 +38,14 @@ namespace jorgen
             //    RequestPath = "/client"
             //});
 
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+           Path.Combine(builder.Environment.ContentRootPath, "Client")),
+                RequestPath = "/client"
+            });
+
             app.UseRouting();
 
             app.UseAuthorization();
