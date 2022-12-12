@@ -4,6 +4,9 @@ namespace jorgen
 {
     public class Program
     {
+        
+
+        
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
@@ -26,11 +29,12 @@ namespace jorgen
 
             app.UseHttpsRedirection();
 
-            //app.UseStaticFiles(new StaticFileOptions
-            //{
-            //    FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "Client")),
-            //    RequestPath = "/client"
-            //});
+
+            var hostEnviornment = app.Services.GetRequiredService<IWebHostEnvironment>();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(hostEnviornment.ContentRootPath, "Client")), RequestPath = "/client"
+            });
 
             app.UseCors(x => x
                 .AllowAnyOrigin()
@@ -44,5 +48,11 @@ namespace jorgen
 
             app.Run();
         }
+
+        //public static string ConfigureWebHostEnv()
+        //{
+        //    //IWebHostEnvironment env;
+        //    //return env.ContentRootPath;
+        //}
     }
 }
