@@ -4,9 +4,6 @@ namespace jorgen
 {
     public class Program
     {
-        
-
-        
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
@@ -27,32 +24,26 @@ namespace jorgen
                 app.UseSwaggerUI();
             }
 
-            app.UseHttpsRedirection();
-
-
-            //var hostEnviornment = app.Services.GetRequiredService<IWebHostEnvironment>();
-            //app.UseStaticFiles(new StaticFileOptions
-            //{
-            //    FileProvider = new PhysicalFileProvider(Path.Combine(hostEnviornment.ContentRootPath, "Client")), RequestPath = "/client"
-            //});
-
             app.UseCors(x => x
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader());
 
-            app.UseAuthorization();
+            app.UseHttpsRedirection();
 
+            var hostEnviornment = app.Services.GetRequiredService<IWebHostEnvironment>();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(hostEnviornment.ContentRootPath, "Client")), RequestPath = "/client"
+            });
+
+            app.UseRouting();
+
+            app.UseAuthorization();
 
             app.MapControllers();
 
             app.Run();
         }
-
-        //public static string ConfigureWebHostEnv()
-        //{
-        //    //IWebHostEnvironment env;
-        //    //return env.ContentRootPath;
-        //}
     }
 }
