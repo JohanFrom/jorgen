@@ -10,16 +10,14 @@ namespace jorgen.Controllers
     [Route("[controller]")]
     public class JorgenController : ControllerBase
     {
-        public IConfiguration? Configuration { get; }
         private static readonly HttpClient client = new();
         private readonly string _url = "https://pinger-23654.azurewebsites.net/";
         private readonly ILogger<JorgenController> _logger;
-        //private readonly string _apiKey = "0c87245268ef262893e0da7caa3d6e37";
+        private readonly string _apiKey = "0c87245268ef262893e0da7caa3d6e37";
 
-        public JorgenController(ILogger<JorgenController> logger, IConfiguration configuration)
+        public JorgenController(ILogger<JorgenController> logger)
         {
             _logger = logger;
-            Configuration = configuration;
         }
 
         
@@ -78,7 +76,7 @@ namespace jorgen.Controllers
         {
             try
             {
-                string url = string.Format("https://api.openweathermap.org/data/2.5/weather?q={0}&appid={1}", "veberod", Configuration?["WeatherApiKey"]);
+                string url = string.Format("https://api.openweathermap.org/data/2.5/weather?q={0}&appid={1}", "veberod", _apiKey);
                 var request = new HttpRequestMessage
                 {
                     Method = HttpMethod.Get,
