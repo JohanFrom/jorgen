@@ -50,7 +50,7 @@ namespace jorgen
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(
-                    Path.Combine(builder.Environment.ContentRootPath, "Client")),
+                    Path.Combine(builder.Environment.ContentRootPath, "wwwroot")),
                     RequestPath = "/client"
             });
 
