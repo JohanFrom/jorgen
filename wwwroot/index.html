@@ -30,6 +30,7 @@
                 <p id="pressure"></p>
                 <p id="humidity"></p>
                 <p id="speed"></p>
+                <p id="status"></p>
             </div>
     </main>
 
@@ -73,6 +74,7 @@
                 pressure.innerHTML = "Pressure: " + json.pressure + " hPa";
                 humidity.innerHTML = "Humidity: " + json.humidity + " %";
                 speed.innerHTML = "Speed: " + json.speed + " m/s";
+                getStatusOfBeard(json.temp)
 
             }).catch(error => {
                 pingTag.innerHTML = `Could not get weather data inside try: ${error.message}`;
@@ -82,35 +84,62 @@
             pingTag.innerHTML = `Could not get weather dataoutside try: ${error.message}`;
         }
 
+        const getStatusOfBeard = (temp) => {
+            const status = document.getElementById("status");
+            try {
+                fetch(`https://jorgen-67273.azurewebsites.net/Jorgen/statusOfBeard?temp=${temp}`, {
+                    headers: {
+                        method: 'GET',
+                        "Content-Type": "text/plain"
+                    }
+                }).then(response => {
+                    
+                    if (!response.ok) {
+                        throw new Error("HTTP error", + response.status);
+                    }
+                   
+                    return response.json()
+                }).then(json => {
+                    status.innerHTML = "Status på jörgens skägg: " + json
+                }).catch(error => {
+                    pingTag.innerHTML = `Could not get weather data inside try: ${error.message}`;
+                    mainConainer.appendChild(pingTag)
+                })
+            } catch (error) {
+                pingTag.innerHTML = `Could not get weather dataoutside try: ${error.message}`;
+            }
+        }
 
 
-        // Ping holder
-        //pingTag.innerHTML = "Listening...";
-        //mainConainer.appendChild(pingTag);
-        //pingTag.id = "ping-tag"
+        const getPing = () => {
+            // Ping holder
+            //pingTag.innerHTML = "Listening...";
+            //mainConainer.appendChild(pingTag);
+            //pingTag.id = "ping-tag"
 
-        //let randomNumber =  Math.floor(Math.random() * (5000 - 2000 + 1))
+            //let randomNumber =  Math.floor(Math.random() * (5000 - 2000 + 1))
 
-        //// Listen for ping
-        //try {
-        //    fetch("https://localhost:7071/Jorgen/getweather" {
-        //        headers: {
-        //            method: 'GET',
-        //            "Content-Type": "text/plain"
-        //        }
-        //    }).then(response => {
-        //        pingTag.innerHTML = response.status == 200 ? "Ping" : "Something went wrong"
-        //        mainConainer.appendChild(pingTag)
-        //        pingTag.style.animation = "none"
-        //    }).catch(error => {
-        //        pingTag.innerHTML = `Ping not responing inside try: ${error.message}`;
-        //        mainConainer.appendChild(pingTag)
-        //        pingTag.style.animation = "none"
-        //    })
-        //} catch (error) {
-        //    pingTag.innerHTML = `Ping not responding outside try: ${error.message}`;
-        //    pingTag.style.animation = "none"
-        //}
+            //// Listen for ping
+            //try {
+            //    fetch("https://localhost:7071/Jorgen/getweather" {
+            //        headers: {
+            //            method: 'GET',
+            //            "Content-Type": "text/plain"
+            //        }
+            //    }).then(response => {
+            //        pingTag.innerHTML = response.status == 200 ? "Ping" : "Something went wrong"
+            //        mainConainer.appendChild(pingTag)
+            //        pingTag.style.animation = "none"
+            //    }).catch(error => {
+            //        pingTag.innerHTML = `Ping not responing inside try: ${error.message}`;
+            //        mainConainer.appendChild(pingTag)
+            //        pingTag.style.animation = "none"
+            //    })
+            //} catch (error) {
+            //    pingTag.innerHTML = `Ping not responding outside try: ${error.message}`;
+            //    pingTag.style.animation = "none"
+            //}
+        }
 
     </script>
 

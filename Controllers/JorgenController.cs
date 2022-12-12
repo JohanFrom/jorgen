@@ -20,10 +20,6 @@ namespace jorgen.Controllers
             _logger = logger;
         }
 
-        
-
-        //public readonly string? _apiKey = Configuration["TokenSecrets:WeatherApiKey"];
-
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -113,6 +109,16 @@ namespace jorgen.Controllers
             {
                 throw new Exception("Exception message: " + e.Message);
             }
+        }
+
+        [HttpGet("statusOfBeard")]
+        public ActionResult<string> GetJorgenStatusBeard(double temp)
+        {
+            WeatherModel.WeatherObject weatherObject = new();
+            
+            string s = JsonConvert.SerializeObject(weatherObject.CalculateJorgensBeard(temp));
+
+            return Ok(s);
         }
     }
 }

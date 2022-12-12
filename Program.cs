@@ -30,16 +30,8 @@ namespace jorgen
                 .AllowAnyHeader());
 
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
-            //var hostEnviornment = app.Services.GetRequiredService<IWebHostEnvironment>();
-            //app.UseStaticFiles(new StaticFileOptions
-            //{
-            //    FileProvider = new PhysicalFileProvider(Path.Combine(hostEnviornment.ContentRootPath, "Client")),
-            //    RequestPath = "/client"
-            //});
-
-
-
 
             app.UseStaticFiles();
 
@@ -49,9 +41,7 @@ namespace jorgen
 
             app.UseStaticFiles(new StaticFileOptions
             {
-                FileProvider = new PhysicalFileProvider(
-                    Path.Combine(builder.Environment.ContentRootPath, "wwwroot")),
-                    RequestPath = "/client"
+                FileProvider = new PhysicalFileProvider(Path.Combine(builder.Environment.ContentRootPath, "wwwroot")), RequestPath = "/client"
             });
 
             app.UseEndpoints(endpoints =>

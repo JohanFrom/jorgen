@@ -1,4 +1,6 @@
-﻿namespace jorgen.Models
+﻿using System.Text;
+
+namespace jorgen.Models
 {
     class WeatherModel
     {
@@ -51,8 +53,38 @@
             public double pressure { get; set; }
             public double humidity { get; set; }
             public double speed { get; set; }
-
             public string? main { get; set; }
+
+            public string CalculateJorgensBeard(double temp)
+            {
+                StringBuilder sb = new();
+                if (temp < 0)
+                {
+                    sb.Append("Jörgens skägg är fruset och kyligt!");
+                }
+                else if (temp > 0 && temp < 5)
+                {
+                    sb.Append("Jörgens skäggg är vått och kallt!");
+                }
+                else if (temp > 5 && temp < 10)
+                {
+                    sb.Append("Jörgens skägg är smått kallt, på bättringsvägen!");
+                }
+                else if (temp > 10 && temp < 15)
+                {
+                    sb.Append("Jörgens skägg är för tillfället väldigt bekvämligt!");
+                }
+                else if (temp > 15 && temp < 20)
+                {
+                    sb.Append("Jörgens skägg är påväg att bli fuktigt!");
+                }
+                else if (temp > 20)
+                {
+                    sb.Append("Jörgens skägg är väldigt fuktigt!");
+                }
+
+                return sb.ToString();
+            }
         }
     }
 }
