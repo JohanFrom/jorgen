@@ -31,12 +31,12 @@ namespace jorgen
 
             app.UseHttpsRedirection();
 
-            var hostEnviornment = app.Services.GetRequiredService<IWebHostEnvironment>();
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(hostEnviornment.ContentRootPath, "Client")),
-                RequestPath = "/client"
-            });
+            //var hostEnviornment = app.Services.GetRequiredService<IWebHostEnvironment>();
+            //app.UseStaticFiles(new StaticFileOptions
+            //{
+            //    FileProvider = new PhysicalFileProvider(Path.Combine(hostEnviornment.ContentRootPath, "Client")),
+            //    RequestPath = "/client"
+            //});
 
             app.UseRouting();
 
