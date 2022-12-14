@@ -68,7 +68,7 @@ namespace jorgen.Controllers
         }
 
         [HttpGet("getweather")]
-        public async Task<ActionResult<object>> GetWeatherData()
+        public async Task<ActionResult> GetWeatherData()
         {
             try
             {
@@ -95,11 +95,11 @@ namespace jorgen.Controllers
 
                     WeatherModel.WeatherObject weatherObject = new()
                     {
-                        temp = double.Parse((info.main.temp - 273.15).ToString("F2")),
-                        humidity = info.main.humidity,
-                        pressure = info.main.pressure,
-                        speed = info.wind.speed,
-                        main = info.weather.Select(x => x.main).FirstOrDefault() ?? null
+                        Temp = double.Parse((info.Main.Temp - 273.15).ToString("F2")),
+                        Humidity = info.Main.Humidity,
+                        Pressure = info.Main.Pressure,
+                        Speed = info.Wind.Speed,
+                        Main = info.Weather.Select(x => x.Main).FirstOrDefault() ?? null
                     };
                     return Ok(weatherObject);
 
@@ -112,11 +112,9 @@ namespace jorgen.Controllers
         }
 
         [HttpGet("statusOfBeard")]
-        public ActionResult<string> GetJorgenStatusBeard(double temp)
-        {
-            WeatherModel.WeatherObject weatherObject = new();
-            
-            string s = JsonConvert.SerializeObject(weatherObject.CalculateJorgensBeard(temp));
+        public ActionResult GetJorgenStatusBeard(double temp)
+        {            
+            string s = JsonConvert.SerializeObject(WeatherModel.WeatherObject.CalculateJorgensBeard(temp));
 
             return Ok(s);
         }

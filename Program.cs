@@ -31,18 +31,20 @@ namespace jorgen
 
             app.UseHttpsRedirection();
 
-            app.UseStaticFiles();
-
+            DefaultFilesOptions DefaultFile = new();
+            DefaultFile.DefaultFileNames.Clear();
+            DefaultFile.DefaultFileNames.Add("index.html");
+            app.UseDefaultFiles(DefaultFile);
             app.UseStaticFiles();
 
             app.UseRouting();
 
             app.UseAuthorization();
 
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(builder.Environment.ContentRootPath, "wwwroot")), RequestPath = "/client"
-            });
+            //app.UseStaticFiles(new StaticFileOptions
+            //{
+            //    FileProvider = new PhysicalFileProvider(Path.Combine(builder.Environment.ContentRootPath, "wwwroot")), RequestPath = "/client"
+            //});
 
             app.UseEndpoints(endpoints =>
             {
