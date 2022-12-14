@@ -21,20 +21,19 @@
 
     <main id="main">
         <p>Mästeren av allt från Objective Pascal till .NET!<p>
+        <button id="login" onclick="oauth2SignIn();">Login</button>
+        <button id="logout" onclick="oauth2SignOut();">Logout</button>
 
-            <button id="login" onclick="oauth2SignIn();">Login</button>
-            <button id="logout" onclick="oauth2SignOut();">Logout</button>
+        <div id="img-container"></div>
 
-            <div id="img-container"></div>
-
-            <div>
-                <p id="hometown"></p>
-                <p id="temp"></p>
-                <p id="pressure"></p>
-                <p id="humidity"></p>
-                <p id="speed"></p>
-                <p id="status"></p>
-            </div>
+        <div>
+            <p id="hometown"></p>
+            <p id="temp"></p>
+            <p id="pressure"></p>
+            <p id="humidity"></p>
+            <p id="speed"></p>
+            <p id="status"></p>
+        </div>
     </main>
     <script>
         var YOUR_CLIENT_ID = '501142797428-ksq5fut5ocb23qpm0aeps8gekk24vkbk.apps.googleusercontent.com';
