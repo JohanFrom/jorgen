@@ -133,6 +133,8 @@
             }
         }
 
+        
+
         function oauth2SignOut() {
             localStorage.clear();
             window.location.reload();
@@ -171,12 +173,23 @@
             form.submit();
         }
 
+        if (document.URL.length > "https://jorgen-67273.azurewebsites.net".length) {
+            setItem()
+            document.getElementById("login").style.display = "none"
+            document.getElementById("login").style.display = "none"
+            document.getElementById("logout").style.display = "block"
+            fetchData()
+        }
+
         var params = JSON.parse(localStorage.getItem('oauth2-test-params'));
         if (params === null) {
             document.getElementById("login").style.display = "block"
             document.getElementById("logout").style.display = "none"
             document.getElementById("login-label").style.display = "block"
         }
+
+        
+
         if (params.access_token !== "") {
             setItem()
             document.getElementById("login").style.display = "none"
@@ -190,7 +203,6 @@
             document.getElementById("login").style.display = "block"
             document.getElementById("login-label").style.display = "block";
         }
-
     </script>
 </body>
 </html>
