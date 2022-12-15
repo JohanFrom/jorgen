@@ -131,6 +131,7 @@
             else {
                 oauth2SignOut()
             }
+            window.location.reload()
         }
 
         function oauth2SignOut() {
@@ -139,7 +140,6 @@
         }
 
         function oauth2SignIn() {
-            setItem()
             // Google's OAuth 2.0 endpoint for requesting an access token
             var oauth2Endpoint = 'https://accounts.google.com/o/oauth2/v2/auth';
 
@@ -174,7 +174,6 @@
 
         var params = JSON.parse(localStorage.getItem('oauth2-test-params'));
         if (params === null) {
-            setItem()
             document.getElementById("login").style.display = "block"
             document.getElementById("logout").style.display = "none"
             document.getElementById("login-label").style.display = "block"
