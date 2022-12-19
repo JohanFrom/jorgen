@@ -15,7 +15,7 @@ namespace jorgen.Services.Concrete
         {
             string? imagepathName = AppDomain.CurrentDomain.BaseDirectory + "data\\jorgenimg.png" ?? null;
 
-            byte[] bytes = System.IO.File.ReadAllBytes(imagepathName!);
+            byte[] bytes = File.ReadAllBytes(imagepathName!);
 
             return bytes;
         }

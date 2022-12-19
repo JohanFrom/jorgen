@@ -1,6 +1,8 @@
-﻿using jorgen.Models.Domain;
+﻿using jorgen.ApplicationSettings;
+using jorgen.Models.Domain;
 using jorgen.Models.WeatherApiObject;
 using jorgen.Services.Abstract;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using static jorgen.Models.WeatherApiObject.WeatherModel;
 
@@ -10,13 +12,16 @@ namespace jorgen.Services.Concrete
     {
         private static readonly HttpClient client = new();
         private readonly IConfiguration _configuration;
-        public WeatherService(IConfiguration configuration)
+        private IOptionsMonitor<AdminOptions> _options;
+        public WeatherService(IConfiguration configuration, IOptionsMonitor<AdminOptions> options)
         {
             _configuration = configuration;
+            _options = options;
         }
 
-        public async Task<Models.Domain.Weather?> GetWeatherDataAsync()
+        public async Task<Models.Domain.Weather> GetWeatherDataAsync()
         {
+            var testar = _options.CurrentValue.AdministratorUserIds.Where(x => x == "SEFROMJ").First();
             string apiKey = _configuration.GetSection("WeatherApi:WeatherApiKey").Value;
             string url = string.Format("https://api.openweathermap.org/data/2.5/weather?q={0}&appid={1}", "veberod", apiKey);
             var request = new HttpRequestMessage
