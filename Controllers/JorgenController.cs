@@ -14,6 +14,7 @@ namespace jorgen.Controllers
         private static readonly HttpClient client = new();
         private readonly string _url = "https://pinger-23654.azurewebsites.net/";
         private readonly Config _config;
+        private static readonly string weatherApiKey = "0c87245268ef262893e0da7caa3d6e37";
 
         public JorgenController(Config config)
         {
@@ -74,7 +75,7 @@ namespace jorgen.Controllers
         {
             try
             {
-                string url = string.Format("https://api.openweathermap.org/data/2.5/weather?q={0}&appid={1}", "veberod", _config.WeatherApiKey);
+                string url = string.Format("https://api.openweathermap.org/data/2.5/weather?q={0}&appid={1}", "veberod", weatherApiKey);
                 var request = new HttpRequestMessage
                 {
                     Method = HttpMethod.Get,
