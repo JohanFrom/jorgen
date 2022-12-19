@@ -4,7 +4,7 @@ using jorgen.Models.WeatherApiObject;
 using jorgen.Services.Abstract;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using static jorgen.Models.WeatherApiObject.WeatherModel;
+
 
 namespace jorgen.Services.Concrete
 {
@@ -12,14 +12,14 @@ namespace jorgen.Services.Concrete
     {
         private static readonly HttpClient client = new();
         private readonly IConfiguration _configuration;
-        private IOptionsMonitor<AdminOptions> _options;
+        private readonly IOptionsMonitor<AdminOptions> _options;
         public WeatherService(IConfiguration configuration, IOptionsMonitor<AdminOptions> options)
         {
             _configuration = configuration;
             _options = options;
         }
 
-        public async Task<Models.Domain.Weather> GetWeatherDataAsync()
+        public async Task<Weather> GetWeatherDataAsync()
         {
             var testar = _options.CurrentValue.AdministratorUserIds.Where(x => x == "SEFROMJ").First();
             string apiKey = _configuration.GetSection("WeatherApi:WeatherApiKey").Value;
@@ -43,9 +43,9 @@ namespace jorgen.Services.Concrete
 
                 WeatherModel.Root info = JsonConvert.DeserializeObject<WeatherModel.Root>(body);
 
-                Models.Domain.Weather weatherObject = new()
+                Weather weatherObject = new()
                 {
-                    Temp = double.Parse((info.Main.Temp - 273.15).ToString("F2")),
+                    Temp = double.Parse((info.Main.Temp - 273.15).ToString("F1")),
                     Humidity = info.Main.Humidity,
                     Pressure = info.Main.Pressure,
                     Speed = info.Wind.Speed,
