@@ -1,4 +1,4 @@
-using Microsoft.Extensions.FileProviders;
+using jorgen.Secrets;
 
 namespace jorgen
 {
@@ -14,6 +14,11 @@ namespace jorgen
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddSingleton(new Config()
+            {
+                WeatherApiKey = builder.Configuration["WEATHER_API_KEY"]
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -27,7 +32,6 @@ namespace jorgen
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader());
-
             app.UseHttpsRedirection();
 
             DefaultFilesOptions DefaultFile = new();

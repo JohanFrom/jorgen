@@ -1,4 +1,5 @@
 ﻿using jorgen.Models;
+using jorgen.Secrets;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -12,12 +13,11 @@ namespace jorgen.Controllers
     {
         private static readonly HttpClient client = new();
         private readonly string _url = "https://pinger-23654.azurewebsites.net/";
-        private readonly ILogger<JorgenController> _logger;
-        private readonly string _apiKey = "0c87245268ef262893e0da7caa3d6e37";
+        private readonly Config _config;
 
-        public JorgenController(ILogger<JorgenController> logger, IConfiguration config)
+        public JorgenController(Config config)
         {
-            _logger = logger;
+            _config = config;
         }
 
         [HttpGet]
@@ -68,11 +68,13 @@ namespace jorgen.Controllers
         }
 
         [HttpGet("getweather")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> GetWeatherData()
         {
             try
             {
-                string url = string.Format("https://api.openweathermap.org/data/2.5/weather?q={0}&appid={1}", "veberod", _apiKey);
+                string url = string.Format("https://api.openweathermap.org/data/2.5/weather?q={0}&appid={1}", "veberod", _config.WeatherApiKey);
                 var request = new HttpRequestMessage
                 {
                     Method = HttpMethod.Get,
@@ -88,7 +90,6 @@ namespace jorgen.Controllers
                         return Content("Could not fetch the weather api");
                     }
 
-
                     var body = await response.Content.ReadAsStringAsync();
 
                     WeatherModel.Root info = JsonConvert.DeserializeObject<WeatherModel.Root>(body);
@@ -101,41 +102,14 @@ namespace jorgen.Controllers
                         Speed = info.Wind.Speed,
                         Main = info.Weather.Select(x => x.Main).FirstOrDefault() ?? null
                     };
-                    return Ok(weatherObject);
 
+                    return Ok(weatherObject);
                 }
             }
             catch (Exception e)
             {
                 throw new Exception("Exception message: " + e.Message);
             }
-        }
-        [HttpGet("testweater")]
-        public async Task<ActionResult<object>> GetTestWeather()
-        {
-            string url = string.Format("https://api.openweathermap.org/data/2.5/weather?q={0}&appid={1}", "veberod", _apiKey);
-            var request = new HttpRequestMessage
-            {
-                Method = HttpMethod.Get,
-                RequestUri = new Uri(url)
-            };
-
-            using(var response = await client.SendAsync(request))
-            {
-                response.EnsureSuccessStatusCode();
-
-                if (!response.IsSuccessStatusCode)
-                {
-                    return Content("Could not fetch the weather api");
-                }
-
-
-                var body = await response.Content.ReadAsStringAsync();
-
-                return body; 
-
-            }
-
         }
 
         [HttpGet("statusOfBeard")]
