@@ -11,12 +11,13 @@ namespace jorgen.Controllers
     public class JorgenController : ControllerBase
     {
         private static readonly HttpClient client = new();
-        private readonly string _pingerUrl = "https://pinger-23654.azurewebsites.net/";
-        private readonly IConfiguration _config;
+        private readonly string _url = "https://pinger-23654.azurewebsites.net/";
+        private readonly ILogger<JorgenController> _logger;
+        private readonly string _apiKey = "0c87245268ef262893e0da7caa3d6e37";
 
-        public JorgenController(IConfiguration config)
+        public JorgenController(ILogger<JorgenController> logger, IConfiguration config)
         {
-            _config = config;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -50,7 +51,7 @@ namespace jorgen.Controllers
         {
             try
             {
-                HttpResponseMessage response = await client.GetAsync(_pingerUrl + "Pinger/" + sleepTime);
+                HttpResponseMessage response = await client.GetAsync(_url + "Pinger/" + sleepTime);
 
                 if (!response.IsSuccessStatusCode)
                 {
@@ -71,7 +72,7 @@ namespace jorgen.Controllers
         {
             try
             {
-                string url = string.Format("https://api.openweathermap.org/data/2.5/weather?q={0}&appid={1}", "veberod", _config["WEATHER_API_KEY"]);
+                string url = string.Format("https://api.openweathermap.org/data/2.5/weather?q={0}&appid={1}", "veberod", _apiKey);
                 var request = new HttpRequestMessage
                 {
                     Method = HttpMethod.Get,
@@ -112,7 +113,7 @@ namespace jorgen.Controllers
         [HttpGet("testweater")]
         public async Task<ActionResult<object>> GetTestWeather()
         {
-            string url = string.Format("https://api.openweathermap.org/data/2.5/weather?q={0}&appid={1}", "veberod", _config["WEATHER_API_KEY"]);
+            string url = string.Format("https://api.openweathermap.org/data/2.5/weather?q={0}&appid={1}", "veberod", _apiKey);
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
