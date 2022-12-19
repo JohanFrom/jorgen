@@ -100,8 +100,6 @@ function setItem() {
 function oauth2SignOut() {
     localStorage.clear();
     window.location.href = "https://jorgen-67273.azurewebsites.net"
-
-    //window.location.reload();
 }
 
 function oauth2SignIn() {
