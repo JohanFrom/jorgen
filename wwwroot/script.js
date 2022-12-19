@@ -1,4 +1,5 @@
-﻿const YOUR_CLIENT_ID = '501142797428-ksq5fut5ocb23qpm0aeps8gekk24vkbk.apps.googleusercontent.com';
+﻿// Google
+const YOUR_CLIENT_ID = '501142797428-ksq5fut5ocb23qpm0aeps8gekk24vkbk.apps.googleusercontent.com';
 const YOUR_REDIRECT_URI = 'https://jorgen-67273.azurewebsites.net';
 var fragmentString = location.hash.substring(1);
 
