@@ -142,7 +142,7 @@ if (localStorage.getItem("oauth2-test-params") === null) {
     document.getElementById("logout").style.display = "none"
 }
 
-if (document.URL.length > 50) {
+if (document.URL.length > 50 && document.URL.indexOf("access_token") >= 0 && document.URL.indexOf("userinfo.profile%20") >= 0) {
     setItem();
     var params = JSON.parse(localStorage.getItem('oauth2-test-params'));
     if (params.access_token !== "") {

@@ -14,7 +14,7 @@ namespace jorgen
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddSingleton(new Config()
+            builder.Services.AddSingleton<Config>(new Config()
             {
                 WeatherApiKey = builder.Configuration["WEATHER_API_KEY"]
             });
@@ -32,6 +32,7 @@ namespace jorgen
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader());
+
             app.UseHttpsRedirection();
 
             DefaultFilesOptions DefaultFile = new();
