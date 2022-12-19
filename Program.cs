@@ -40,12 +40,6 @@ namespace jorgen
 
             app.UseAuthorization();
 
-            //app.UseStaticFiles(new StaticFileOptions
-            //{
-            //    FileProvider = new PhysicalFileProvider(Path.Combine(builder.Environment.ContentRootPath, "wwwroot")),
-            //    RequestPath = "/client"
-            //});
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
