@@ -25,7 +25,7 @@ function fetchData() {
     imageContainer.appendChild(img);
 
     try {
-        fetch("https://jorgen-67273.azurewebsites.net/Jorgen/getweather", {
+        fetch("https://jorgen-67273.azurewebsites.net/Weather/getweather", {
             headers: {
                 method: 'GET',
                 "Content-Type": "text/plain"

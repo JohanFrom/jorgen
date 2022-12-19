@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace jorgen.Models
+namespace jorgen.Models.WeatherApiObject
 {
     class WeatherModel
     {

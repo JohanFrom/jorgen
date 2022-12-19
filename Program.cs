@@ -1,4 +1,8 @@
-using jorgen.Secrets;
+using Azure.Security.KeyVault.Secrets;
+using Azure.Core;
+using Azure.Identity;
+using jorgen.Services.Abstract;
+using jorgen.Services.Concrete;
 
 namespace jorgen
 {
@@ -13,11 +17,10 @@ namespace jorgen
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddOptions();
 
-            builder.Services.AddSingleton<Config>(new Config()
-            {
-                WeatherApiKey = builder.Configuration["WEATHER_API_KEY"]
-            });
+            builder.Services.AddScoped<IJorgenService, JorgenService>();
+            builder.Services.AddScoped<IWeatherService, WeatherService>();
 
             var app = builder.Build();
 
