@@ -26,7 +26,8 @@ function fetchData() {
     imageContainer.appendChild(img);
 
     try {
-        fetch("https://jorgen-67273.azurewebsites.net/Weather/getweather", {
+        const city = "veberod"
+        fetch(`https://jorgen-67273.azurewebsites.net/Weather/getweather?city=${city}`, {
             headers: {
                 method: 'GET',
                 "Content-Type": "text/plain"
@@ -63,7 +64,6 @@ function getStatusOfBeard(temp) {
                 "Content-Type": "text/plain"
             }
         }).then(response => {
-
             if (!response.ok) {
                 throw new Error("HTTP error", + response.status);
             }
@@ -94,8 +94,6 @@ function setItem() {
         oauth2SignOut()
     }
 }
-
-
 
 function oauth2SignOut() {
     localStorage.clear();

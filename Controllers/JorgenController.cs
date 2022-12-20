@@ -1,9 +1,5 @@
-﻿using jorgen.Models;
-using jorgen.Services.Abstract;
+﻿using jorgen.Services.Abstract;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using System.Net;
 
 namespace jorgen.Controllers
 {
@@ -32,7 +28,7 @@ namespace jorgen.Controllers
 
             if (bytes == null)
             {
-                return Content("Could not find image");
+                return NotFound();
             }
 
             return File(bytes, "image/png");
@@ -41,7 +37,7 @@ namespace jorgen.Controllers
         /// <summary>
         /// Returns the status of Jorgens Beard based on the temperature
         /// </summary>
-        /// <param name="temp"></param>
+        /// <param name="temp">Temperature in celcius</param>
         /// <returns></returns>
         [HttpGet("statusOfBeard")]
         [ProducesResponseType(StatusCodes.Status200OK)]

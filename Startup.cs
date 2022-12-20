@@ -65,7 +65,7 @@ namespace jorgen
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "AlumniNetwork API v1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Jorgen API v1");
                 //c.RoutePrefix = string.Empty;
             });
 
@@ -85,7 +85,6 @@ namespace jorgen
             app.UseRouting();
 
             app.UseAuthorization();
-
 
             app.UseEndpoints(endpoints =>
             {
