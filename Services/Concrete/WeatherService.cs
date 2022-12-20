@@ -4,26 +4,23 @@ using jorgen.Models.WeatherApiObject;
 using jorgen.Services.Abstract;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-
+using System.Text;
 
 namespace jorgen.Services.Concrete
 {
     public class WeatherService : IWeatherService
     {
         private static readonly HttpClient client = new();
-        private readonly IConfiguration _configuration;
-        private readonly IOptionsMonitor<AdminOptions> _options;
-        public WeatherService(IConfiguration configuration, IOptionsMonitor<AdminOptions> options)
+        private readonly IOptionsMonitor<WeatherOptions> _options;
+
+        public WeatherService(IOptionsMonitor<WeatherOptions> options)
         {
-            _configuration = configuration;
             _options = options;
         }
 
         public async Task<Weather> GetWeatherDataAsync()
         {
-            var testar = _options.CurrentValue.AdministratorUserIds.Where(x => x == "SEFROMJ").First();
-            string apiKey = _configuration.GetSection("WeatherApi:WeatherApiKey").Value;
-            string url = string.Format("https://api.openweathermap.org/data/2.5/weather?q={0}&appid={1}", "veberod", apiKey);
+            string url = CreateWeatherApiUrl();
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
@@ -33,12 +30,7 @@ namespace jorgen.Services.Concrete
             using (var response = await client.SendAsync(request))
             {
                 response.EnsureSuccessStatusCode();
-
-                if (!response.IsSuccessStatusCode)
-                {
-                    return null;
-                }
-
+                
                 var body = await response.Content.ReadAsStringAsync();
 
                 WeatherModel.Root info = JsonConvert.DeserializeObject<WeatherModel.Root>(body);
@@ -54,6 +46,17 @@ namespace jorgen.Services.Concrete
 
                 return weatherObject;
             }
+        }
+
+        private string CreateWeatherApiUrl()
+        {
+            StringBuilder sb = new();
+            sb.Append(_options.CurrentValue.URL); // Base url
+            sb.Append("veberod"); // City
+            sb.Append("&appid="); // Binder
+            sb.Append(_options.CurrentValue.ApiKey); // API Key
+
+            return sb.ToString();
         }
     }
 }

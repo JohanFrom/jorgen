@@ -19,7 +19,7 @@ function fetchData() {
     const hometowm = document.getElementById("hometown");
 
     // Set attributes
-    img.setAttribute("src", "https://jorgen-67273.azurewebsites.net/Jorgen");
+    img.setAttribute("src", "https://jorgen-67273.azurewebsites.net/Jorgen/jorgenimage");
     img.setAttribute("height", "250");
     img.setAttribute("width", "250");
     img.setAttribute("alt", "jorgen_img");

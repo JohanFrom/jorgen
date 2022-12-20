@@ -23,8 +23,8 @@ namespace jorgen
             services.AddScoped<IJorgenService, JorgenService>();
             services.AddScoped<IWeatherService, WeatherService>();
 
-            services.AddOptions<AdminOptions>().Bind(Configuration.GetSection("Admin")).ValidateDataAnnotations();
-            services.AddSingleton(provider => provider.GetService<IOptionsMonitor<AdminOptions>>().CurrentValue);
+            services.AddOptions<WeatherOptions>().Bind(Configuration.GetSection("WeatherData")).ValidateDataAnnotations();
+            services.AddSingleton(provider => provider.GetService<IOptionsMonitor<WeatherOptions>>().CurrentValue);
 
             services.AddSwaggerGen(c =>
             {

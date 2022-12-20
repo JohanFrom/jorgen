@@ -18,7 +18,7 @@ namespace jorgen.Controllers
             _jorgenService = jorgenService;
         }
 
-        [HttpGet]
+        [HttpGet("jorgenimage")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult GetJorgenImage()
