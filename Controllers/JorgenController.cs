@@ -18,6 +18,10 @@ namespace jorgen.Controllers
             _jorgenService = jorgenService;
         }
 
+        /// <summary>
+        /// Retrives an image of Jorgen
+        /// </summary>
+        /// <returns>image.png</returns>
         [HttpGet("jorgenimage")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -34,6 +38,11 @@ namespace jorgen.Controllers
             return File(bytes, "image/png");
         }
 
+        /// <summary>
+        /// Returns the status of Jorgens Beard based on the temperature
+        /// </summary>
+        /// <param name="temp"></param>
+        /// <returns></returns>
         [HttpGet("statusOfBeard")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

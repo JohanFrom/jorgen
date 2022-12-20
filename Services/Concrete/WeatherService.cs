@@ -18,9 +18,9 @@ namespace jorgen.Services.Concrete
             _options = options;
         }
 
-        public async Task<Weather> GetWeatherDataAsync()
+        public async Task<Weather?> GetWeatherDataAsync(string city)
         {
-            string url = CreateWeatherApiUrl();
+            string url = CreateWeatherApiUrl(city);
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
@@ -29,8 +29,11 @@ namespace jorgen.Services.Concrete
 
             using (var response = await client.SendAsync(request))
             {
-                response.EnsureSuccessStatusCode();
-                
+                if (!response.IsSuccessStatusCode)
+                {
+                    return null;
+                }
+
                 var body = await response.Content.ReadAsStringAsync();
 
                 WeatherModel.Root info = JsonConvert.DeserializeObject<WeatherModel.Root>(body);
@@ -48,12 +51,12 @@ namespace jorgen.Services.Concrete
             }
         }
 
-        private string CreateWeatherApiUrl()
+        private string CreateWeatherApiUrl(string city)
         {
             StringBuilder sb = new();
             sb.Append(_options.CurrentValue.URL); // Base url
-            sb.Append("veberod"); // City
-            sb.Append("&appid="); // Binder
+            sb.Append(city); // City
+            sb.Append("&appid="); // City - Binder - Apikey
             sb.Append(_options.CurrentValue.ApiKey); // API Key
 
             return sb.ToString();

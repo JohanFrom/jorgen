@@ -5,6 +5,6 @@ namespace jorgen.Services.Abstract
 {
     public interface IWeatherService
     {
-        public Task<Weather> GetWeatherDataAsync();
+        public Task<Weather?> GetWeatherDataAsync(string city);
     }
 }
