@@ -1,9 +1,12 @@
-﻿using jorgen.ApplicationSettings;
+﻿using Azure.Security.KeyVault.Secrets;
+using Azure.Core;
+using jorgen.ApplicationSettings;
 using jorgen.Services.Abstract;
 using jorgen.Services.Concrete;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
+using Azure.Identity;
 
 namespace jorgen
 {
@@ -22,9 +25,10 @@ namespace jorgen
         
             services.AddScoped<IJorgenService, JorgenService>();
             services.AddScoped<IWeatherService, WeatherService>();
+            services.AddScoped<IKeyVaultService, KeyVaultService>();
 
-            services.AddOptions<WeatherOptions>().Bind(Configuration.GetSection("WeatherData")).ValidateDataAnnotations();
-            services.AddSingleton(provider => provider.GetService<IOptionsMonitor<WeatherOptions>>().CurrentValue);
+            services.AddOptions<ApplicationOptions>().Bind(Configuration.GetSection("ApplicationOptions")).ValidateDataAnnotations();
+            services.AddSingleton(provider => provider.GetService<IOptionsMonitor<ApplicationOptions>>().CurrentValue);
 
             services.AddSwaggerGen(c =>
             {
@@ -68,6 +72,23 @@ namespace jorgen
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Jorgen API v1");
                 //c.RoutePrefix = string.Empty;
             });
+
+            SecretClientOptions options = new()
+            {
+                Retry =
+                {
+                    Delay = TimeSpan.FromSeconds(2),
+                    MaxDelay = TimeSpan.FromSeconds(16),
+                    MaxRetries = 5,
+                    Mode = RetryMode.Exponential
+                }
+            };
+
+            var client = new SecretClient(new Uri("https://JorgenKeyVault.vault.azure.net/"), new DefaultAzureCredential(), options);
+
+            KeyVaultSecret secret = client.GetSecret("WeatherApiKey");
+
+            string secretValue = secret.Value;
 
             app.UseCors(x => x
                 .AllowAnyOrigin()

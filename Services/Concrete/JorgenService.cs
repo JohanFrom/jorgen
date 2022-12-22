@@ -1,6 +1,7 @@
 ﻿using jorgen.Models.WeatherApiObject;
 using jorgen.Services.Abstract;
 using Newtonsoft.Json;
+using System.Xml;
 
 namespace jorgen.Services.Concrete
 {

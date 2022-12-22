@@ -11,11 +11,13 @@ namespace jorgen.Services.Concrete
     public class WeatherService : IWeatherService
     {
         private static readonly HttpClient client = new();
-        private readonly IOptionsMonitor<WeatherOptions> _options;
+        private readonly IOptionsMonitor<ApplicationOptions> _options;
+        private readonly IKeyVaultService _keyVaultService;
 
-        public WeatherService(IOptionsMonitor<WeatherOptions> options)
+        public WeatherService(IOptionsMonitor<ApplicationOptions> options, IKeyVaultService keyVaultService)
         {
             _options = options;
+            _keyVaultService = keyVaultService;
         }
 
         public async Task<Weather?> GetWeatherDataAsync(string city)
@@ -54,10 +56,10 @@ namespace jorgen.Services.Concrete
         private string CreateWeatherApiUrl(string city)
         {
             StringBuilder sb = new();
-            sb.Append(_options.CurrentValue.URL); // Base url
+            sb.Append(_options.CurrentValue.WeatherUrl); // Base url
             sb.Append(city); // City
             sb.Append("&appid="); // City - Binder - Apikey
-            sb.Append(_options.CurrentValue.ApiKey); // API Key
+            sb.Append(_keyVaultService.GetWeatherApiKey()); // API Key
 
             return sb.ToString();
         }
